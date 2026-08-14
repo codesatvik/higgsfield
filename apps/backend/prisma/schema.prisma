@@ -11,3 +11,57 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+ id  String @id @default(uuid())
+ username String
+ password String
+ avatars Avatar[]
+ avatarVideo AvatarVideo[]
+} 
+
+model Avatar {
+  id String @id @default(uuid())
+  userId String
+  name String
+  avatarImages AvatarImage[]
+  avatarVideoReference AvatarVideoReference[]
+  user User @relation(fields: [userId], references: [id])
+}
+
+model AvatarImage {
+  id String @id @default(uuid())
+  avatarId String
+  type AvatarImageType 
+  url  String
+  avatar Avatar @relation(fields: [avatarId], references: [id])
+}
+enum AvatarImageType {
+  User
+  Model
+}
+
+model AvatarVideo {
+  id String @id @default(uuid())
+  userId String
+  prompt String
+  startFrame  String?
+  endFrame String?
+  duration Int
+  width Int
+  height Int
+  status  AvatarVideoStatus
+  avatarVideoReferences AvatarVideoReference[]
+  user User @relation(fields: [userId], references: [id])
+}
+enum AvatarVideoStatus {
+  Pending
+  Done
+}
+model AvatarVideoReference {
+  id String @id @default(uuid())
+  avatarVideoId  String
+  avatarId String
+  avatarVideo AvatarVideo @relation(fields: [avatarVideoId], references: [id])
+  avatar Avatar @relation(fields: [avatarId], references: [id])
+}
