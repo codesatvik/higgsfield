@@ -6,5 +6,5 @@ export const CreateUserSchema = z.object({
 })
 export const CreateAvatarSchema = z.object({
     name: z.string(),
-    images:z.array(z.string())
+    image: z.string()
 })
