@@ -12,6 +12,9 @@ import { GoogleGenAI } from "@google/genai";
 import { uuid } from "uuidv4"
 import { createImage } from "./image";
 import { generateVideo } from "./video";
+import  cors from "cors"
+
+app.use(cors())
 
 // const client = new InferenceClient(process.env.HF_TOKEN);
 const ai = new GoogleGenAI({ apiKey: process.env.Google_apikey });
